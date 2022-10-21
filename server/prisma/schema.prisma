@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  name      String
+  email     String     @unique
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  role      Role       @default(USER)
+  schedules Schedule[]
+
+  @@map("users")
+}
+
+model Local {
+  id             String     @id @default(uuid())
+  name           String
+  type           String
+  description    String
+  openPeriod     DateTime
+  openHour       DateTime
+  isIndisponible Boolean    @default(false)
+  schedules      Schedule[]
+
+  @@map("locals")
+}
+
+model Schedule {
+  id          String   @id @default(uuid())
+  local       Local    @relation(fields: [localId], references: [id])
+  localId     String
+  description String
+  material    Material @relation(fields: [materialId], references: [id])
+  materialId  String
+  type        String
+  date        DateTime
+  hour        DateTime
+  status      String
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    String
+
+  @@map("schedules")
+}
+
+model Material {
+  id         String     @id @default(uuid())
+  name       String
+  descrtipon String
+  type       String
+  schedules  Schedule[]
+
+  @@map("mateials")
+}
+
+enum Role {
+  USER
+  ADMIN
+}

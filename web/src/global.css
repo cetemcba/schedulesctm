@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    @apply bg-[#09090A] text-zinc-100;
+}
+
+.react-calendar {
+    width: 300px;
+    max-width: 100%;
+    background: rgb(63 63 70 );
+    border: 1px solid #5e5e5b;
+    border-radius: 0.25rem;
+    font-family: Arial, Helvetica, sans-serif;
+    line-height: 1.125em;
+  }
+  .react-date-picker{
+    border-radius: 0.25rem;
+  }
+
+.react-date-picker__wrapper{
+    border: none;
+}
