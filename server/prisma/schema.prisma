@@ -27,8 +27,8 @@ model Local {
   name           String
   type           String
   description    String
-  openPeriod     DateTime
   openHour       DateTime
+  closeHour      DateTime
   isIndisponible Boolean    @default(false)
   schedules      Schedule[]
 
@@ -43,8 +43,8 @@ model Schedule {
   material    Material @relation(fields: [materialId], references: [id])
   materialId  String
   type        String
-  date        DateTime
-  hour        DateTime
+  starHour    DateTime
+  endHour     DateTime
   status      String
   author      User     @relation(fields: [authorId], references: [id])
   authorId    String
