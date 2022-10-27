@@ -55,7 +55,7 @@ model Schedule {
 model Material {
   id         String     @id @default(uuid())
   name       String
-  descrtipon String
+  description String
   type       String
   schedules  Schedule[]
 
