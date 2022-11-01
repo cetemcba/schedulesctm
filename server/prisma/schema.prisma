@@ -25,7 +25,7 @@ model User {
 model Local {
   id             String     @id @default(uuid())
   name           String
-  type           String
+  type           Type
   description    String
   openHour       DateTime
   closeHour      DateTime
@@ -42,7 +42,7 @@ model Schedule {
   description String
   material    Material @relation(fields: [materialId], references: [id])
   materialId  String
-  type        String
+  type        Type
   starHour    DateTime
   endHour     DateTime
   status      String
@@ -56,7 +56,7 @@ model Material {
   id         String     @id @default(uuid())
   name       String
   description String
-  type       String
+  type       Type
   schedules  Schedule[]
 
   @@map("mateials")
@@ -65,4 +65,12 @@ model Material {
 enum Role {
   USER
   ADMIN
+}
+
+enum Type {
+  ENFERMAGEM
+  ESTETICA
+  SEGTRABALHO
+  ANALISESCLINICAS
+  INFORMATICA
 }

@@ -5,7 +5,7 @@
   "main": "src/server.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsnd --respawn src/server.ts"
+    "dev": "tsnd --respawn --transpile-only src/server.ts"
   },
   "author": "Joao Victor Gonçalves",
   "license": "MIT",
