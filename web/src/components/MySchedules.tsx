@@ -1,4 +1,6 @@
 import { agendametos } from "../utils/utilitarios"
+import {api} from "../lib/api"
+import { useEffect, useState } from "react"
 
 interface Schedulesprops{
     local: string,
@@ -6,7 +8,25 @@ interface Schedulesprops{
     status: string,
 }
 
-export function MySchedules(){
+export function MySchedules(props: Schedulesprops){
+    const [schedule, setSchedule ] = useState();
+    console.log(props.local)
+    /*
+    useEffect(()=>{
+        api.get('/myschedules/7658dd7f-a2c8-4b82-9e82-fe955a03fa87')
+        .then((response)=> setSchedule(response.data))
+    },[]);
+    
+    console.log(schedule)
+
+    const data = api.get('')
+    .then(response => response.data)
+    .then(data => {
+        
+        console.log(data)
+        return data.
+    })*/
+    
 
     return(
         <>
@@ -19,13 +39,13 @@ export function MySchedules(){
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    {agendametos.map((agendameto,id) => {
+                    {agendametos.map((agendametos,id) => {
                         return(
                             <tr className="border-b border-zinc-800">
-                                <td key={id} className="p-1">{agendameto.local}</td>
-                                <td className="p-1">{agendameto.date}</td>
-                                <td className="p-1">{agendameto.hour}</td>
-                                <td className={`p1 ${agendameto.status === 'Confirmado' ? 'text-lime-600': '' }`}>{agendameto.status}</td>
+                                <td key={id} className="p-1">{agendametos.local}</td>
+                                <td className="p-1">{agendametos.date}</td>
+                                <td className="p-1">{agendametos.hour}</td>
+                                <td className={`p1 ${agendametos.status === 'Confirmado' ? 'text-lime-600': '' }`}>{agendametos.status}</td>
                             </tr>
                         )
                     })}  
@@ -35,4 +55,18 @@ export function MySchedules(){
         </>
         
     )
+}
+
+const getServerSideProps = async () =>{
+    const [getSchedules] = await Promise.all(
+        [api.get('/myschedules/7658dd7f-a2c8-4b82-9e82-fe955a03fa87')]
+    )
+
+    return{
+       props:{
+           local: getSchedules.data.local.name,
+           data: getSchedules.data.startdate,
+           status: getSchedules.data.status
+       }
+    }
 }
