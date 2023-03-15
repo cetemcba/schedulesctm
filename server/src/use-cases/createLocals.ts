@@ -1,7 +1,7 @@
 import { prisma } from "../prisma"
 import { Request, Response } from "express";
 
-export class CreateLocalsUsecases {
+export class CreateLocals{
 
     async handle(req: Request, res: Response) {
 

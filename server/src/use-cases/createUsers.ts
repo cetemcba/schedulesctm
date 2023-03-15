@@ -6,13 +6,13 @@ interface userProps {
     email: string,
 }
 
-export class CreateUsersUsecases {
+export class CreateUsers{
 
     async handle(req: Request, res: Response) {
 
         const { name, email }: userProps = req.body
         const emailAux = email.split("@")
-        console.log(emailAux[1])
+        console.log(emailAux[1])  
 
         if(emailAux[1] != 'cetemcba.com'){
             console.error('Email invalido, apenas emails do dominio cetemcba são aceitos')

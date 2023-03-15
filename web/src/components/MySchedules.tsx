@@ -2,24 +2,26 @@ import { agendametos } from "../utils/utilitarios"
 import {api} from "../lib/api"
 import { useEffect, useState } from "react"
 
-interface Schedulesprops{
+interface Scheduleprops{
     local: string,
-    data: string,
     status: string,
+    starHour: string,
+    endHour: string,
 }
 
-export function MySchedules(props: Schedulesprops){
-    const [schedule, setSchedule ] = useState();
-    console.log(props.local)
-    /*
+interface Schedulesprops extends Array<Scheduleprops>{}
+
+export function MySchedules(){
+    const [schedules, setSchedule ] = useState<Schedulesprops>([]);
     useEffect(()=>{
         api.get('/myschedules/7658dd7f-a2c8-4b82-9e82-fe955a03fa87')
-        .then((response)=> setSchedule(response.data))
-    },[]);
+        .then((response)=> response.data)
+        .then((data)=> setSchedule(data))
+    },[api]);
     
-    console.log(schedule)
+    console.log(schedules)
 
-    const data = api.get('')
+    /*const data = api.get('')
     .then(response => response.data)
     .then(data => {
         
@@ -30,6 +32,9 @@ export function MySchedules(props: Schedulesprops){
 
     return(
         <>
+            {schedules.map((schedule:any,id: any) => {
+                console.log(schedule.local.name)
+            })}
             <div>
             <table className="w-full mt-8 mb-8 mr-16">
                 <thead className="border-b border-zinc-800">
@@ -39,16 +44,16 @@ export function MySchedules(props: Schedulesprops){
                     <th>Status</th>
                 </thead>
                 <tbody>
-                    {agendametos.map((agendametos,id) => {
+                    {schedules.map((schedule:Scheduleprops, id) => {
                         return(
-                            <tr className="border-b border-zinc-800">
-                                <td key={id} className="p-1">{agendametos.local}</td>
-                                <td className="p-1">{agendametos.date}</td>
-                                <td className="p-1">{agendametos.hour}</td>
-                                <td className={`p1 ${agendametos.status === 'Confirmado' ? 'text-lime-600': '' }`}>{agendametos.status}</td>
+                            <tr key={id} className="border-b border-zinc-800">
+                                <td className="p-1">{schedule.local.name}</td>
+                                <td className="p-1">{schedule.starHour}</td>
+                                <td className="p-1">{schedule.endHour}</td>
+                                <td className={`p1 ${schedule.status === 'Confirmado' ? 'text-lime-600': '' }`}>{schedule.status}</td>
                             </tr>
                         )
-                    })}  
+                    })} 
                 </tbody>
             </table>
             </div>
@@ -57,7 +62,7 @@ export function MySchedules(props: Schedulesprops){
     )
 }
 
-const getServerSideProps = async () =>{
+/*const getServerSideProps = async () =>{
     const [getSchedules] = await Promise.all(
         [api.get('/myschedules/7658dd7f-a2c8-4b82-9e82-fe955a03fa87')]
     )
@@ -69,4 +74,4 @@ const getServerSideProps = async () =>{
            status: getSchedules.data.status
        }
     }
-}
+}*/

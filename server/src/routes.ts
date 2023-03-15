@@ -1,8 +1,8 @@
 import express from 'express'
-import { CreateLocalsUsecases } from './use-cases/createLocals';
-import { CreateMaterialsUsecases } from './use-cases/createMaterial';
-import { CreateSchedulesUsecases } from './use-cases/createSchedules';
-import { CreateUsersUsecases } from './use-cases/createUsers'
+import { CreateLocals } from './use-cases/createLocals';
+import { CreateMaterials } from './use-cases/createMaterial';
+import { CreateSchedules } from './use-cases/createSchedules';
+import { CreateUsers} from './use-cases/createUsers'
 import { ListDisponibleLocals } from './use-cases/listLocals';
 import { ListSchedulesPerUsers } from './use-cases/listSchedulesPerUsers';
 import { MySchedules } from './use-cases/mySchedules';
@@ -10,10 +10,10 @@ import { MySchedules } from './use-cases/mySchedules';
 
 const routes = express.Router();
 
-const createUser = new CreateUsersUsecases();
-const createSchedule = new CreateSchedulesUsecases();
-const createLocal = new CreateLocalsUsecases()
-const createMaterial = new CreateMaterialsUsecases();
+const createUser = new CreateUsers();
+const createSchedule = new CreateSchedules();
+const createLocal = new CreateLocals()
+const createMaterial = new CreateMaterials();
 const findUserShedules = new ListSchedulesPerUsers();
 const findLocals = new ListDisponibleLocals();
 const mySchedules = new MySchedules(); 
@@ -25,7 +25,7 @@ routes.post("/local", createLocal.handle);
 routes.post("/material", createMaterial.handle);
 routes.get("/user/:id",findUserShedules.handle );
 routes.get("/schedule", findLocals.handle);
-routes.get("/myschedules/:uthorId", mySchedules.handle);
+routes.get("/mySchedules/:authorId", mySchedules.handle);
 
 export { routes };
 

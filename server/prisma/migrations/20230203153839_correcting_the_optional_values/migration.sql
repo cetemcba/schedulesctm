@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "users" ALTER COLUMN "picture" DROP NOT NULL,
+ALTER COLUMN "token_id" DROP NOT NULL;

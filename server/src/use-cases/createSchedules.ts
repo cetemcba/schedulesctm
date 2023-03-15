@@ -1,22 +1,21 @@
 import { prisma } from "../prisma"
 import { Request, Response } from "express";
 
-export class CreateSchedulesUsecases {
+export class CreateSchedules {
 
     async handle(req: Request, res: Response) {
 
-        const { localId,local,description,materialId,type,starHour,endHour,status,authorId } = req.body
+        const { localId,description,materialId,starHour,endHour,status,authorId,materialQuantity } = req.body
         const schedule = await prisma.schedule.create({
             data: {
                 localId,
-                local,
                 description,
                 materialId,
-                type,   
                 starHour,
                 endHour,  
                 status,   
                 authorId, 
+                materialQuantity,
             }
         });
 

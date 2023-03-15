@@ -1,7 +1,7 @@
 import { prisma } from "../prisma"
 import { Request, Response } from "express";
 
-export class CreateMaterialsUsecases {
+export class CreateMaterials{
 
     async handle(req: Request, res: Response) {
 

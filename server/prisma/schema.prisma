@@ -11,13 +11,15 @@ datasource db {
 }
 
 model User {
-  id        String     @id @default(uuid())
-  name      String
-  email     String     @unique
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  role      Role       @default(USER)
-  schedules Schedule[]
+  id               String     @id @default(uuid())
+  token_id         String?    @unique
+  name             String
+  email            String     @unique
+  picture          String?
+  role             Role       @default(USER)
+  Schedule         Schedule[]
+  isresponsibility Local?     @relation(fields: [localId], references: [id])
+  localId          String?
 
   @@map("users")
 }
@@ -31,34 +33,35 @@ model Local {
   closeHour      DateTime
   isIndisponible Boolean    @default(false)
   schedules      Schedule[]
+  responsables   User[]
 
   @@map("locals")
 }
 
 model Schedule {
-  id          String   @id @default(uuid())
-  local       Local    @relation(fields: [localId], references: [id])
-  localId     String
-  description String
-  material    Material @relation(fields: [materialId], references: [id])
-  materialId  String
-  type        Type
-  starHour    DateTime
-  endHour     DateTime
-  status      Status @default(Pendente)
-  author      User     @relation(fields: [authorId], references: [id])
-  authorId    String
-  isFinished  Boolean @default(false)
+  id               String   @id @default(uuid())
+  starHour         DateTime
+  endHour          DateTime
+  description      String
+  localId          String
+  status           Status   @default(Pendente)
+  authorId         String
+  materialId       String
+  materialQuantity Int
+
+  author   User     @relation(fields: [authorId], references: [id])
+  Local    Local?   @relation(fields: [localId], references: [id])
+  material Material @relation(fields: [materialId], references: [id])
 
   @@map("schedules")
 }
 
 model Material {
-  id         String     @id @default(uuid())
-  name       String
+  id          String     @id @default(uuid())
+  name        String
   description String
-  type       Type
-  schedules  Schedule[]
+  type        Type
+  Schedule    Schedule[]
 
   @@map("mateials")
 }
@@ -66,6 +69,7 @@ model Material {
 enum Role {
   USER
   ADMIN
+  RESPOSiBLE
 }
 
 enum Type {
@@ -78,6 +82,7 @@ enum Type {
 
 enum Status {
   Pendente
-  Confirmado
-  Concluido
+  Agendado
+  Cancelado
+  Indeferido
 }
